@@ -1,0 +1,63 @@
+# Scripts for running i3 window manager on laptop
+# ===============================================
+# This repo includes configuration, scripts and commands needed to get i3
+# window manager [0] to work better on a laptop.
+# Tested on i3 v4.2 running on Ubuntu 12.10, but these tips should work on
+# generic Linux systems as well.
+#
+# [0] http://i3wm.org/
+
+# When HDMI connects, fix monitor setup and HDMI audio.
+# -----------------------------------------------------
+# To configure Alsa to use HDMI sound when connected,
+# edit the asound.hdmi-connected script in the hdmi-audio/ folder, and then run
+# the install.sh script. The hdmi-switch.sh script is run each time the HDMI
+# cable is connected or disconnected, and this also run Xrandr.
+#
+# An answer on StackExchange [1] provides help on finding the correct Alsa
+# device and card.
+#
+# [1] http://unix.stackexchange.com/questions/29185/how-to-check-why-sound-over-hdmi-doesnt-work
+
+# Disable nautilus desktop window.
+# --------------------------------
+# An additional desktop window opens up when you open a folder in Nautilus.
+# This gsettings command disables that.
+
+gsettings set org.gnome.desktop.background show-desktop-icons false
+
+# Lock and suspend when closing laptop lid
+# ----------------------------------------
+# In the file /etc/acpi/lid.sh, the following two lines must be added.
+# There should be a prettier way of doing this.
+
+-------8<--------8<-------8<----------------------------------------------------
+# Inside the for loop that gets all the X users:
+su $user -c "i3lock -c 141414"
+
+# After the loop:
+dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+-------8<--------8<-------8<----------------------------------------------------
+
+# Dimming screen when on battery, monitor off settings.
+# -----------------------------------------------------
+# Add the file /etc/pm/power.d/performance with the following contents;
+ 
+-------8<--------8<-------8<----------------------------------------------------
+#!/bin/sh
+
+if [ "$1" = "true" ]
+then 
+    # Battery
+    # Dim screen
+    echo 13 > /sys/class/backlight/acpi_video0/brightness
+    # 300s before standby and suspend, 60s monitor off
+    xset dpms 100 100 100
+else
+    # AC
+    # Full brightness
+    echo 15 > /sys/class/backlight/acpi_video0/brightness
+    # 300s before standby suspend and monitor off
+    xset dpms 300 300 300
+fi
+-------8<--------8<-------8<----------------------------------------------------
