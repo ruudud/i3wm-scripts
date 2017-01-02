@@ -10,22 +10,22 @@ See the [dotfiles repo](https://github.com/ruudud/dotfiles/blob/master/i3/config
 for example config.
 
 
-## When HDMI connects, fix monitor setup and HDMI audio.
+## When HDMI connects, fix monitor setup and HDMI audio
 To configure Alsa to use HDMI sound when connected,
 edit the `asound.hdmi-connected` script in the `hdmi-switch/` folder, and then
 run the `install.sh` script. `The hdmi-switch.sh` script is run each time the
-HDMI cable is connected or disconnected, and this also run Xrandr.
+HDMI cable is connected or disconnected, and also runs xrandr.
 
 An [answer on StackExchange](http://unix.stackexchange.com/questions/29185/how-to-check-why-sound-over-hdmi-doesnt-work)
 provides help on finding the correct Alsa device and card.
 
-TODO: do switch with pulseaudio
+TODO: switch to Pulseaudio?
 
 
 # Lock on suspend (when closing laptop lid)
 The following requires that you're using systemd-logind.
 Add the file `/etc/systemd/system/i3lock.service` with the following contents,
-replacing USERNAME with your user:
+replacing `USERNAM` with your user:
 
 ```
 [Unit]
@@ -43,7 +43,7 @@ WantedBy=sleep.target
 ```
 
 
-# Dimming screen when on battery, monitor off settings.
+# Dimming screen when on battery, monitor off
 Add the file `/etc/pm/power.d/performance` with the following contents;
  
 ```shell
