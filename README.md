@@ -22,10 +22,10 @@ provides help on finding the correct Alsa device and card.
 TODO: switch to Pulseaudio?
 
 
-# Lock on suspend (when closing laptop lid)
+## Lock on suspend (when closing laptop lid)
 The following requires that you're using systemd-logind.
 Add the file `/etc/systemd/system/i3lock.service` with the following contents,
-replacing `USERNAM` with your user:
+replacing `USERNAME` with your user:
 
 ```
 [Unit]
@@ -43,7 +43,7 @@ WantedBy=sleep.target
 ```
 
 
-# Dimming screen when on battery, monitor off
+## Dimming screen when on battery, monitor off
 Add the file `/etc/pm/power.d/performance` with the following contents;
  
 ```shell
